@@ -14,7 +14,7 @@ public class NotDuplicatedValidator implements ConstraintValidator<NotDuplicated
     private Class<?> domain;
     private String field;
     @PersistenceContext
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
 
     public NotDuplicatedValidator(EntityManager entityManager) {
         this.entityManager = entityManager;
@@ -30,7 +30,8 @@ public class NotDuplicatedValidator implements ConstraintValidator<NotDuplicated
     public boolean isValid(Object value, ConstraintValidatorContext context) {
 
         List<?> resultList = entityManager.createQuery("SELECT 1 FROM " + domain.getSimpleName() + " WHERE " +
-                field + " = " + value)
+                field + " = :value")
+                .setParameter("value", value)
                 .getResultList();
 
         Assert.isTrue(resultList.size() <= 1, "Há mais de um " + field + " campo com o mesmo valor " + value);

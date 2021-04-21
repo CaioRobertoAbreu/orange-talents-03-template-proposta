@@ -1,8 +1,13 @@
 package br.com.zupacademy.caio.proposta.proposta;
 
+import br.com.zupacademy.caio.proposta.externo.solicitacao.Solicitacao;
+import br.com.zupacademy.caio.proposta.externo.solicitacao.SolicitacaoRequest;
+import br.com.zupacademy.caio.proposta.externo.solicitacao.VerificaDadosClienteFeign;
 import br.com.zupacademy.caio.proposta.log.Log;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,18 +21,26 @@ import java.net.URI;
 @RestController
 public class PropostaController {
 
+    private final VerificaDadosClienteFeign verificaDadosClienteFeign;
     private final PropostaRepository propostaRepository;
+    private final ObjectMapper objectMapper;
     private final Logger log = LoggerFactory.getLogger(Log.class);
 
-    public PropostaController(PropostaRepository propostaRepository) {
+    public PropostaController(VerificaDadosClienteFeign verificaDadosClienteFeign, PropostaRepository propostaRepository,
+                              ObjectMapper objectMapper) {
+
+        this.verificaDadosClienteFeign = verificaDadosClienteFeign;
         this.propostaRepository = propostaRepository;
+        this.objectMapper = objectMapper;
     }
 
     @PostMapping("/proposta")
     @Transactional
     public ResponseEntity<?> index(@RequestBody @Valid NovaPropostaRequest request) {
         Proposta proposta = request.toProposta();
+
         propostaRepository.save(proposta);
+        proposta.verificaDadosFinanceiros(verificaDadosClienteFeign, objectMapper);
 
         log.info("Proposta criada, email={}", proposta.getEmail());
 
@@ -39,4 +52,5 @@ public class PropostaController {
 
         return ResponseEntity.created(uri).build();
     }
+
 }
