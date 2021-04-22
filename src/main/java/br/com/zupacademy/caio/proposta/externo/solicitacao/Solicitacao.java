@@ -28,6 +28,7 @@ public class Solicitacao {
                  */
                 SolicitacaoResponse solicitacaoResponse = objectMapper.readValue(body, SolicitacaoResponse.class);
                 return solicitacaoResponse.getResultadoSolicitacao();
+
             } catch (JsonProcessingException jsonProcessingException) {
                 jsonProcessingException.printStackTrace();
             }

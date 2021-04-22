@@ -40,6 +40,7 @@ public class Proposta {
         Solicitacao solicitacao = new Solicitacao(feign, objectMapper);
         String status = solicitacao.verificaDados(new SolicitacaoRequest(this));
 
+        //converte o status vindo em String em um Enum
         this.propostaStatus = PropostaStatus.toEnum(status);
     }
 

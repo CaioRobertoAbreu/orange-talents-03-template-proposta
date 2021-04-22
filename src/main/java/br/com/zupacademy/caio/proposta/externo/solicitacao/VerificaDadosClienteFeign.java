@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(url = "http://localhost:9999/api/solicitacao", name = "verificaDados")
+@FeignClient(url = "${CARTOES_URL}", name = "verificaDados")
 @Component
 public interface VerificaDadosClienteFeign {
 
