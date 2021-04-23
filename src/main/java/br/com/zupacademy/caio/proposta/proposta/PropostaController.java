@@ -4,6 +4,7 @@ import br.com.zupacademy.caio.proposta.externo.solicitacao.Solicitacao;
 import br.com.zupacademy.caio.proposta.externo.solicitacao.SolicitacaoRequest;
 import br.com.zupacademy.caio.proposta.externo.solicitacao.VerificaDadosClienteFeign;
 import br.com.zupacademy.caio.proposta.log.Log;
+import br.com.zupacademy.caio.proposta.transactions.TransactionProposta;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,16 +23,16 @@ import java.net.URI;
 public class PropostaController {
 
     private final VerificaDadosClienteFeign verificaDadosClienteFeign;
-    private final PropostaRepository propostaRepository;
     private final ObjectMapper objectMapper;
+    private final TransactionProposta transaction;
     private final Logger log = LoggerFactory.getLogger(Log.class);
 
-    public PropostaController(VerificaDadosClienteFeign verificaDadosClienteFeign, PropostaRepository propostaRepository,
-                              ObjectMapper objectMapper) {
+    public PropostaController(VerificaDadosClienteFeign verificaDadosClienteFeign,
+                              ObjectMapper objectMapper, TransactionProposta transaction) {
 
         this.verificaDadosClienteFeign = verificaDadosClienteFeign;
-        this.propostaRepository = propostaRepository;
         this.objectMapper = objectMapper;
+        this.transaction = transaction;
     }
 
     @PostMapping("/proposta")

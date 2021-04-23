@@ -1,5 +1,6 @@
 package br.com.zupacademy.caio.proposta.proposta;
 
+import br.com.zupacademy.caio.proposta.cartao.Cartao;
 import br.com.zupacademy.caio.proposta.externo.solicitacao.Solicitacao;
 import br.com.zupacademy.caio.proposta.externo.solicitacao.SolicitacaoRequest;
 import br.com.zupacademy.caio.proposta.externo.solicitacao.VerificaDadosClienteFeign;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 
 @Entity
@@ -27,6 +29,12 @@ public class Proposta {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private PropostaStatus propostaStatus;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cartao cartao;
+
+    @Deprecated
+    public Proposta() {
+    }
 
     public Proposta(String documento, String email, String nome, String endereco, BigDecimal salario) {
         this.documento = documento;
@@ -46,6 +54,10 @@ public class Proposta {
 
     public void addStatus(String status){
         this.propostaStatus = PropostaStatus.toEnum(status);
+    }
+
+    public void addCartao(@Valid Cartao cartao){
+        this.cartao = cartao;
     }
 
     public Long getId() {

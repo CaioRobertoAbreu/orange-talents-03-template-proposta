@@ -3,6 +3,7 @@ package br.com.zupacademy.caio.proposta.externo.solicitacao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
+import org.springframework.web.bind.annotation.RequestBody;
 
 public class Solicitacao {
 
