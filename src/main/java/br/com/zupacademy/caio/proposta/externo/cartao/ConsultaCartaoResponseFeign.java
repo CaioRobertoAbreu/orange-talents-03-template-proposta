@@ -2,6 +2,7 @@ package br.com.zupacademy.caio.proposta.externo.cartao;
 
 import br.com.zupacademy.caio.proposta.cartao.Cartao;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class ConsultaCartaoResponseFeign {
@@ -9,9 +10,9 @@ public class ConsultaCartaoResponseFeign {
     private String id;
     private LocalDateTime emitidoEm;
     private String titular;
-    private Integer limite;
+    private BigDecimal limite;
 
-    public ConsultaCartaoResponseFeign(String id, LocalDateTime emitidoEm, String titular, Integer limite) {
+    public ConsultaCartaoResponseFeign(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
         this.id = id;
         this.emitidoEm = emitidoEm;
         this.titular = titular;

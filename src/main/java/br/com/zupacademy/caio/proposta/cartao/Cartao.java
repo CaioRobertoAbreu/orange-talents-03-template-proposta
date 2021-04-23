@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,10 +18,10 @@ public class Cartao {
     @NotBlank
     private String titular;
     @NotNull
-    private Integer limite;
+    private BigDecimal limite;
 
 
-    public Cartao(String id, LocalDateTime emitidoEm, String titular, Integer limite) {
+    public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
         this.id = id;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
@@ -33,5 +34,13 @@ public class Cartao {
 
     public String getId() {
         return id;
+    }
+
+    public LocalDateTime getEmitidoEm() {
+        return emitidoEm;
+    }
+
+    public BigDecimal getLimite() {
+        return limite;
     }
 }

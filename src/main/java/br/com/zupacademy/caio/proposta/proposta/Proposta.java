@@ -29,7 +29,7 @@ public class Proposta {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private PropostaStatus propostaStatus;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Cartao cartao;
 
     @Deprecated
@@ -52,10 +52,6 @@ public class Proposta {
         this.propostaStatus = PropostaStatus.toEnum(status);
     }
 
-    public void addStatus(String status){
-        this.propostaStatus = PropostaStatus.toEnum(status);
-    }
-
     public void addCartao(@Valid Cartao cartao){
         this.cartao = cartao;
     }
@@ -74,5 +70,13 @@ public class Proposta {
 
     public String getNome() {
         return this.nome;
+    }
+
+    public String getPropostaStatus() {
+        return propostaStatus.toString();
+    }
+
+    public Cartao getCartao() {
+        return cartao;
     }
 }
