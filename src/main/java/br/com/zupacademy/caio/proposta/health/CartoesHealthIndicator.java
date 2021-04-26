@@ -14,7 +14,7 @@ import java.net.URL;
 @Component
 public class CartoesHealthIndicator implements HealthIndicator {
 
-    private static final String URL = "http://localhost:8888/api/cartoes";
+    private static final String URL = "http://contas:8888/api/cartoes";
     private final Logger log = LoggerFactory.getLogger(Log.class);
 
     @Override

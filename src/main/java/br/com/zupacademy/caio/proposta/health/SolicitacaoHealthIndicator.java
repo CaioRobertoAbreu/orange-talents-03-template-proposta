@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 @Component("solicitacao")
 public class SolicitacaoHealthIndicator implements HealthIndicator {
 
-    private static final String URL = "http://localhost:9999/api/solicitacao";
+    private static final String URL = "http://analise:9999/api/solicitacao";
     private final Logger log = LoggerFactory.getLogger(Log.class);
 
     @Override
