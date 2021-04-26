@@ -1,11 +1,15 @@
 package br.com.zupacademy.caio.proposta.cartao;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import br.com.zupacademy.caio.proposta.biometria.Biometria;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Cartao {
@@ -19,6 +23,9 @@ public class Cartao {
     private String titular;
     @NotNull
     private BigDecimal limite;
+    @ElementCollection
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
+    private Set<Biometria> biometrias = new HashSet<>();
 
 
     public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
@@ -30,6 +37,10 @@ public class Cartao {
 
     @Deprecated
     public Cartao() {
+    }
+
+    public void addBiometria(Biometria biometria){
+        this.biometrias.add(biometria);
     }
 
     public String getId() {
