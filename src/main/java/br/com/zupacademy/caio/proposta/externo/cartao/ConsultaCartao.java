@@ -1,8 +1,10 @@
 package br.com.zupacademy.caio.proposta.externo.cartao;
 
 import br.com.zupacademy.caio.proposta.cartao.Cartao;
+import br.com.zupacademy.caio.proposta.externo.cartao.bloqueio.BloqueioCartaoResponseFeign;
+import br.com.zupacademy.caio.proposta.externo.cartao.bloqueio.BloqueioRequestFeign;
 import br.com.zupacademy.caio.proposta.log.Log;
-import feign.FeignException;
+import feign.FeignException.FeignClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,12 +12,12 @@ import org.springframework.stereotype.Component;
 import javax.validation.Valid;
 
 @Component
-public class ConsultaCartaoCriado {
+public class ConsultaCartao {
 
-    private final ConsultaCartaoCriadoFeign feign;
+    private final ConsultaCartaoFeign feign;
     private final Logger log = LoggerFactory.getLogger(Log.class);
 
-    public ConsultaCartaoCriado(ConsultaCartaoCriadoFeign feign) {
+    public ConsultaCartao(ConsultaCartaoFeign feign) {
         this.feign = feign;
     }
 
@@ -30,6 +32,20 @@ public class ConsultaCartaoCriado {
             log.info("Nova consulta realizada. Cartão não processado nome={}", request.getNome());
             return null;
         }
+    }
+
+    public Boolean bloqueiaCartao(String idCartao){
+        BloqueioRequestFeign requestFeign = new BloqueioRequestFeign();
+        try {
+            feign.bloquearCartao(idCartao, requestFeign);
+            log.info("Cartao bloqueado " + idCartao);
+            return true;
+
+        }catch (FeignClientException e){
+            log.warn("Bloqueio não processado. " + e.getMessage());
+            return false;
+        }
+
     }
 
 }

@@ -1,6 +1,7 @@
 package br.com.zupacademy.caio.proposta.cartao;
 
 import br.com.zupacademy.caio.proposta.biometria.Biometria;
+import br.com.zupacademy.caio.proposta.cartao.bloqueio.Bloqueio;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,7 +27,8 @@ public class Cartao {
     @ElementCollection
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private Set<Biometria> biometrias = new HashSet<>();
-    private boolean cartaoBloqueado;
+    @Enumerated(EnumType.STRING)
+    private Bloqueio cartaoBloqueado;
 
 
     public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
@@ -56,11 +58,11 @@ public class Cartao {
         return limite;
     }
 
-    public boolean getCartaoBloqueado(){
-        return this.cartaoBloqueado;
+    public Enum<Bloqueio> getCartaoBloqueado() {
+        return cartaoBloqueado;
     }
 
     public void bloquearCartao(){
-        this.cartaoBloqueado = true;
+        this.cartaoBloqueado = Bloqueio.BLOQUEADO;
     }
 }
