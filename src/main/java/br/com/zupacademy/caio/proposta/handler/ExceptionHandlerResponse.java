@@ -7,6 +7,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice
 public class ExceptionHandlerResponse {
 
@@ -33,4 +35,16 @@ public class ExceptionHandlerResponse {
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errors);
     }
+
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResponseEntity<ErrorList> exception(ConstraintViolationException exception){
+
+        ErrorList errors = new ErrorList(HttpStatus.BAD_REQUEST.value());
+
+        exception.getConstraintViolations().forEach(err ->
+                errors.addFieldError(new FieldError(err.getInvalidValue().toString(), err.getMessage())));
+
+        return ResponseEntity.badRequest().body(errors);
+    }
+
 }

@@ -26,6 +26,7 @@ public class Cartao {
     @ElementCollection
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private Set<Biometria> biometrias = new HashSet<>();
+    private boolean cartaoBloqueado;
 
 
     public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
@@ -53,5 +54,13 @@ public class Cartao {
 
     public BigDecimal getLimite() {
         return limite;
+    }
+
+    public boolean getCartaoBloqueado(){
+        return this.cartaoBloqueado;
+    }
+
+    public void bloquearCartao(){
+        this.cartaoBloqueado = true;
     }
 }
