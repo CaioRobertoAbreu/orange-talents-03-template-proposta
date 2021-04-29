@@ -1,5 +1,6 @@
-package br.com.zupacademy.caio.proposta.cartao;
+package br.com.zupacademy.caio.proposta.cartao.bloqueio;
 
+import br.com.zupacademy.caio.proposta.cartao.Cartao;
 import br.com.zupacademy.caio.proposta.cartao.bloqueio.Bloqueio;
 import br.com.zupacademy.caio.proposta.cartao.bloqueio.BloqueioCartao;
 import br.com.zupacademy.caio.proposta.cartao.bloqueio.BloqueioCartaoRepository;
