@@ -197,6 +197,8 @@ services:
       SCHEDULED_INITIAL_DELAY: 10000
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/proposta
       KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/proposta/protocol/openid-connect/certs
+      PROMETHEUS_LABEL_APLICACAO: servico de proposta
+      PROMETHEUS_LABEL_AMBIENTE: desenvolvimento
     networks:
       - microsservices
     depends_on:

@@ -15,7 +15,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/proposta").hasAnyAuthority("SCOPE_teste")
-                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .csrf()
                 .and()

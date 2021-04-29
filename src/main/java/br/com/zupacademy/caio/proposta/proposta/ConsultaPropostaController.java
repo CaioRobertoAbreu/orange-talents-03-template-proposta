@@ -1,5 +1,6 @@
 package br.com.zupacademy.caio.proposta.proposta;
 
+import br.com.zupacademy.caio.proposta.metrics.MinhaMetricaTeste;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +13,16 @@ import java.util.Optional;
 public class ConsultaPropostaController {
 
     private final PropostaRepository propostaRepository;
+    private final MinhaMetricaTeste minhaMetricaTeste;
 
-    public ConsultaPropostaController(PropostaRepository propostaRepository) {
+    public ConsultaPropostaController(PropostaRepository propostaRepository,
+                                      MinhaMetricaTeste minhaMetricaTeste) {
+
         this.propostaRepository = propostaRepository;
+        this.minhaMetricaTeste = minhaMetricaTeste;
     }
 
-    @GetMapping("/propostas/{id}")
+    @GetMapping("/proposta/{id}")
     @Transactional
     public ResponseEntity<?> consultarProposta(@PathVariable Long id) {
 
@@ -26,7 +31,7 @@ public class ConsultaPropostaController {
         if(propostaOptional.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-
+        minhaMetricaTeste.meuContador();
         Proposta proposta = propostaOptional.get();
 
         return ResponseEntity.ok(new PropostaResponse(proposta));
