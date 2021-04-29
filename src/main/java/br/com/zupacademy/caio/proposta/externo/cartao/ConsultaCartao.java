@@ -1,9 +1,9 @@
 package br.com.zupacademy.caio.proposta.externo.cartao;
 
 import br.com.zupacademy.caio.proposta.cartao.Cartao;
-import br.com.zupacademy.caio.proposta.externo.cartao.bloqueio.BloqueioCartaoResponseFeign;
 import br.com.zupacademy.caio.proposta.externo.cartao.bloqueio.BloqueioRequestFeign;
 import br.com.zupacademy.caio.proposta.log.Log;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException.FeignClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +14,12 @@ import javax.validation.Valid;
 @Component
 public class ConsultaCartao {
 
+    private final ObjectMapper mapper;
     private final ConsultaCartaoFeign feign;
     private final Logger log = LoggerFactory.getLogger(Log.class);
 
-    public ConsultaCartao(ConsultaCartaoFeign feign) {
+    public ConsultaCartao(ObjectMapper mapper, ConsultaCartaoFeign feign) {
+        this.mapper = mapper;
         this.feign = feign;
     }
 
@@ -28,7 +30,7 @@ public class ConsultaCartao {
 
             return response.toCartao();
 
-        } catch (RuntimeException e){
+        } catch (FeignClientException e){
             log.info("Nova consulta realizada. Cartão não processado nome={}", request.getNome());
             return null;
         }
@@ -45,7 +47,8 @@ public class ConsultaCartao {
             log.warn("Bloqueio não processado. " + e.getMessage());
             return false;
         }
-
     }
+
+
 
 }

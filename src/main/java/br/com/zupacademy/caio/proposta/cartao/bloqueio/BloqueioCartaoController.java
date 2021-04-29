@@ -4,6 +4,7 @@ import br.com.zupacademy.caio.proposta.cartao.Cartao;
 import br.com.zupacademy.caio.proposta.cartao.bloqueio.Bloqueio;
 import br.com.zupacademy.caio.proposta.cartao.bloqueio.BloqueioCartao;
 import br.com.zupacademy.caio.proposta.cartao.bloqueio.BloqueioCartaoRepository;
+import br.com.zupacademy.caio.proposta.cartao.viagem.AvisoViagemRepository;
 import br.com.zupacademy.caio.proposta.exception.APIException;
 import br.com.zupacademy.caio.proposta.externo.cartao.ConsultaCartao;
 import br.com.zupacademy.caio.proposta.transactions.TransactionCartao;

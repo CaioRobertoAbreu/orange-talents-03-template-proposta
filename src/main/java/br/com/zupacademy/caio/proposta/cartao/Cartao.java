@@ -28,7 +28,7 @@ public class Cartao {
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.ALL)
     private Set<Biometria> biometrias = new HashSet<>();
     @Enumerated(EnumType.STRING)
-    private Bloqueio cartaoBloqueado;
+    private Bloqueio cartaoBloqueado = Bloqueio.NAO_BLOQUEADO;
 
 
     public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
@@ -59,7 +59,7 @@ public class Cartao {
     }
 
     public Enum<Bloqueio> getCartaoBloqueado() {
-        return cartaoBloqueado;
+        return this.cartaoBloqueado;
     }
 
     public void bloquearCartao(){
