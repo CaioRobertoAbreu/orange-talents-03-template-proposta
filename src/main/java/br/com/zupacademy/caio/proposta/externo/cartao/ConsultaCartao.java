@@ -4,6 +4,7 @@ import br.com.zupacademy.caio.proposta.cartao.Cartao;
 import br.com.zupacademy.caio.proposta.externo.cartao.bloqueio.BloqueioRequestFeign;
 import br.com.zupacademy.caio.proposta.log.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import feign.FeignException.FeignClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class ConsultaCartao {
 
             return response.toCartao();
 
-        } catch (FeignClientException e){
+        } catch (FeignException e){
             log.info("Nova consulta realizada. Cartão não processado nome={}", request.getNome());
             return null;
         }
@@ -43,7 +44,7 @@ public class ConsultaCartao {
             log.info("Cartao bloqueado " + idCartao);
             return true;
 
-        }catch (FeignClientException e){
+        }catch (FeignException e){
             log.warn("Bloqueio não processado. " + e.getMessage());
             return false;
         }

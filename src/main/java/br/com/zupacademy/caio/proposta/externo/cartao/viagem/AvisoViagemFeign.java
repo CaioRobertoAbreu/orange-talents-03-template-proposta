@@ -30,7 +30,7 @@ public class AvisoViagemFeign {
             log.info("Aviso de viagem realizado com sucesso. " + id);
             return returnfeign.getResultado();
 
-        }catch (FeignException.FeignClientException e){
+        }catch (FeignException e){
             log.warn("Aviso de viagem falhou. " + e.getMessage());
             String body = e.contentUTF8();
             try{
