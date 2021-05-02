@@ -195,6 +195,7 @@ services:
       CARTOES_URL: http://contas:8888/api/cartoes
       CARTOES_URL_BLOQUEIO: /{id}/bloqueios
       CARTOES_URL_AVISOS: /{id}/avisos
+      CARTEIRA_URL: /{id}/carteiras
       SCHEDULED_FIXED_RATE: 5000
       SCHEDULED_INITIAL_DELAY: 10000
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/proposta

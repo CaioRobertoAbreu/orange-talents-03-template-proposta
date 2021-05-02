@@ -2,7 +2,7 @@ package br.com.zupacademy.caio.proposta.externo.carteira;
 
 import br.com.zupacademy.caio.proposta.cartao.Cartao;
 import br.com.zupacademy.caio.proposta.carteiradigital.Carteira;
-import br.com.zupacademy.caio.proposta.carteiradigital.PaypalRequest;
+import br.com.zupacademy.caio.proposta.carteiradigital.CarteiraRequest;
 import br.com.zupacademy.caio.proposta.log.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;
@@ -22,7 +22,7 @@ public class AssociaCarteira {
         this.mapper = mapper;
     }
 
-    public Carteira associa(Cartao cartao, PaypalRequest request){
+    public Carteira associa(Cartao cartao, CarteiraRequest request){
         CarteiraResponseFeign returnFeign;
         try {
             returnFeign = feign.associarCartao(cartao.getId(), new CarteiraRequestFeign(request));

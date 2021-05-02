@@ -3,19 +3,15 @@ package br.com.zupacademy.caio.proposta.cartao;
 import br.com.zupacademy.caio.proposta.biometria.Biometria;
 import br.com.zupacademy.caio.proposta.cartao.bloqueio.Bloqueio;
 import br.com.zupacademy.caio.proposta.carteiradigital.Carteira;
-import br.com.zupacademy.caio.proposta.carteiradigital.PaypalRequest;
+import br.com.zupacademy.caio.proposta.carteiradigital.CarteiraRequest;
 import br.com.zupacademy.caio.proposta.externo.carteira.AssociaCarteira;
-import br.com.zupacademy.caio.proposta.externo.carteira.CarteiraFeign;
-import br.com.zupacademy.caio.proposta.externo.carteira.CarteiraRequestFeign;
-import br.com.zupacademy.caio.proposta.externo.carteira.CarteiraResponseFeign;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Cartao {
@@ -34,8 +30,8 @@ public class Cartao {
     private Set<Biometria> biometrias = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private Bloqueio cartaoBloqueado = Bloqueio.NAO_BLOQUEADO;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Carteira carteira;
+    @ManyToMany(mappedBy = "cartoes", cascade = CascadeType.ALL)
+    private List<Carteira> carteiras = new ArrayList<>();
 
     public Cartao(String id, LocalDateTime emitidoEm, String titular, BigDecimal limite) {
         this.id = id;
@@ -48,16 +44,12 @@ public class Cartao {
     public Cartao() {
     }
 
-    public void addCarteira(AssociaCarteira feign, PaypalRequest request){
-        Carteira carteira = feign.associa(this, request);
-
-        if(carteira != null){
-            this.carteira = carteira;
-        }
+    public void addCarteira(Carteira carteira){
+        this.carteiras.add(carteira);
     }
 
-    public Carteira getCarteira() {
-        return carteira;
+    public Collection<Carteira> getCarteiras() {
+        return carteiras;
     }
 
     public void addBiometria(Biometria biometria){

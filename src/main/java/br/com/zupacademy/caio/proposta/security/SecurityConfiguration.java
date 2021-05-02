@@ -14,7 +14,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/proposta").hasAnyAuthority("SCOPE_teste")
+                .antMatchers(HttpMethod.POST, "/proposta").hasAnyAuthority("SCOPE_teste").antMatchers(HttpMethod.POST, "/cartoes/{id:[0-9]+}**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf()

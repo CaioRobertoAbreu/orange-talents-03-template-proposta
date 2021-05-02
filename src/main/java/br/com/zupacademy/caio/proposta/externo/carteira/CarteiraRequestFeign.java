@@ -1,15 +1,15 @@
 package br.com.zupacademy.caio.proposta.externo.carteira;
 
-import br.com.zupacademy.caio.proposta.carteiradigital.PaypalRequest;
+import br.com.zupacademy.caio.proposta.carteiradigital.CarteiraRequest;
 
 public class CarteiraRequestFeign {
 
     private String email;
     private String carteira;
 
-    public CarteiraRequestFeign(PaypalRequest request) {
+    public CarteiraRequestFeign(CarteiraRequest request) {
         this.email = request.getEmail();
-        this.carteira = "paypal";
+        this.carteira = request.getTipoCarteiraString();
     }
 
     public String getEmail() {

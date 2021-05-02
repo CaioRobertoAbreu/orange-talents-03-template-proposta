@@ -11,6 +11,5 @@ import java.util.Optional;
 @Repository
 public interface CarteiraRepository extends JpaRepository<Carteira, String> {
 
-    @Query("SELECT c FROM Cartao c WHERE c.id = :value AND c.carteira != NULL")
-    Optional<Cartao> existeCarteira(@Param("value") String id);
+
 }

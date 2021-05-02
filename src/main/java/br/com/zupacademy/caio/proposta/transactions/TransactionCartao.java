@@ -2,6 +2,7 @@ package br.com.zupacademy.caio.proposta.transactions;
 
 import br.com.zupacademy.caio.proposta.cartao.Cartao;
 import br.com.zupacademy.caio.proposta.cartao.CartaoRepository;
+import br.com.zupacademy.caio.proposta.carteiradigital.CarteiraRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,4 +27,10 @@ public class TransactionCartao {
         return cartaoRepository.save(cartao);
     }
 
+    @Transactional
+    public boolean existeCartao(Cartao cartao, CarteiraRequest request){
+        Optional<Cartao> cartaoOptional = cartaoRepository.existeCarteira(cartao.getId(), request.getTipoCarteiraEnum());
+
+        return cartaoOptional.isPresent();
+    }
 }
