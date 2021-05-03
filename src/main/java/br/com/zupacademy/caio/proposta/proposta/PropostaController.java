@@ -6,6 +6,8 @@ import br.com.zupacademy.caio.proposta.externo.solicitacao.VerificaDadosClienteF
 import br.com.zupacademy.caio.proposta.log.Log;
 import br.com.zupacademy.caio.proposta.transactions.TransactionProposta;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -26,22 +28,27 @@ public class PropostaController {
     private final ObjectMapper objectMapper;
     private final TransactionProposta transaction;
     private final Logger log = LoggerFactory.getLogger(Log.class);
+    private final Tracer tracer;
 
-    public PropostaController(VerificaDadosClienteFeign verificaDadosClienteFeign,
-                              ObjectMapper objectMapper, TransactionProposta transaction) {
-
+    public PropostaController(VerificaDadosClienteFeign verificaDadosClienteFeign, ObjectMapper objectMapper,
+                              TransactionProposta transaction, Tracer tracer) {
         this.verificaDadosClienteFeign = verificaDadosClienteFeign;
         this.objectMapper = objectMapper;
         this.transaction = transaction;
+        this.tracer = tracer;
     }
 
     @PostMapping("/proposta")
-    @Transactional
-    public ResponseEntity<?> index(@RequestBody @Valid NovaPropostaRequest request) {
+    public ResponseEntity<?> cadastrar(@RequestBody @Valid NovaPropostaRequest request) {
+        Span span = tracer.activeSpan();
+        span.setTag("user.email", request.getEmail());
         Proposta proposta = request.toProposta();
 
-        propostaRepository.save(proposta);
+        transaction.salvar(proposta);
+
         proposta.verificaDadosFinanceiros(verificaDadosClienteFeign, objectMapper);
+
+        transaction.salvar(proposta);
 
         log.info("Proposta criada, email={}", proposta.getEmail());
 

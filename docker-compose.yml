@@ -202,6 +202,11 @@ services:
       KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/proposta/protocol/openid-connect/certs
       PROMETHEUS_LABEL_APLICACAO: servico de proposta
       PROMETHEUS_LABEL_AMBIENTE: desenvolvimento
+      JAEGER_ENDPOINT: http://jaeger:8081/api/traces
+      JAEGER_SERVICE_NAME: "proposta"
+      JAEGER_ENABLED: "true"
+      JAEGER_SAMPLER: 1
+
     networks:
       - microsservices
     depends_on:
